@@ -7,52 +7,52 @@ const CONTAINERS_LIST = [
   {
     id: 1,
     name: "Containernet",
-    command: "pwd"
+    command: "docker exec -it containernet bash"
   },
   {
     id: 2,
     name: "Suporte",
-    command: "pwd"
+    command: "docker exec -it mn.suporte bash"
   },
   {
     id: 3,
     name: "Internet",
-    command: "pwd"
+    command: "docker exec -it mn.internet bash"
   },
   {
     id: 4,
     name: "Server Web",
-    command: "pwd"
+    command: "docker exec -it mn.servWeb bash"
   },
   {
     id: 5,
     name: "Server Samba",
-    command: "pwd"
+    command: "docker exec -it mn.servSamba bash"
   },
   {
     id: 6,
-    name: "Roteador",
-    command: "pwd"
+    name: "User Gustavo",
+    command: "docker exec -it mn.gustavo bash"
   },
   {
     id: 7,
-    name: "Joyce",
-    command: "pwd"
+    name: "User Joyce",
+    command: "docker exec -it mn.joyce bash"
   },
   {
     id: 8,
-    name: "Henrique",
-    command: "pwd"
+    name: "User Henrique",
+    command: "docker exec -it mn.henrique bash"
   },
   {
     id: 9,
-    name: "Gabriele",
-    command: "pwd"
+    name: "User Gabriele",
+    command: "docker exec -it mn.gabriele bash"
   },
   {
     id: 10,
-    name: "João",
-    command: "pwd"
+    name: "User João",
+    command: "docker exec -it mn.joao bash"
   }
 ];
 
