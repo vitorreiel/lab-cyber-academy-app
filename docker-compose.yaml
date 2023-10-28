@@ -1,0 +1,17 @@
+version: '3'
+services:
+  web-terminal:
+    build: ./
+    image: 'web-terminal/go-ssh:latest'
+    container_name: web-terminal
+    volumes:
+      - ./config.toml:/root/config.toml
+    ports:
+      - '9000:8080'
+    networks:
+      - terminal-network
+
+networks:
+  terminal-network:
+    name: terminal-network
+    driver: bridge
