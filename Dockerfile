@@ -12,5 +12,5 @@ FROM scratch
 WORKDIR /root/
 COPY --from=go-env /usr/src/app/go-ssh/app ./
 COPY --from=node-env /usr/src/app/go-app/public/build ./public
-EXPOSE 8080/tcp
+EXPOSE 9000/tcp
 ENTRYPOINT ["./app"]

@@ -65,6 +65,6 @@ func main() {
 
 	http.Handle("/", http.FileServer(http.Dir("./public/")))
 	http.HandleFunc("/web-socket/ssh", handler.webSocket)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":9000", nil))
 }
 
