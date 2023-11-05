@@ -1,17 +1,10 @@
 version: '3'
 services:
-  web-terminal:
+  lab-cyber-academy:
     build: ./
-    image: 'web-terminal/go-ssh:latest'
-    container_name: web-terminal
+    image: 'lab-cyber-academy/web-terminal:latest'
+    container_name: lab-cyber-academy
     volumes:
       - ./config.toml:/root/config.toml
     ports:
       - '9000:9000'
-    networks:
-      - terminal-network
-
-networks:
-  terminal-network:
-    name: terminal-network
-    driver: bridge
