@@ -7,7 +7,8 @@ const CONTAINERS_LIST = [
   {
     id: 1,
     name: "Containernet",
-    command: "clear && docker exec -it containernet bash"
+    reopenTerminal: true,
+    command: "clear && docker attach containernet\r"
   },
   {
     id: 2,

@@ -1,4 +1,4 @@
-host = ""
+host = "54.158.132.144"
 port = 22
-user = ""
-password = ""
+user = "aluno"
+password = "aluno"

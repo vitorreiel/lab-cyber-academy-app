@@ -49,6 +49,16 @@ const TerminalInstance = () => {
 
     initTerminal();
 
+    setTimeout(() => {
+      const getNextCommand = localStorage.getItem('nextCommand') ?? '';
+
+      if (Boolean(getNextCommand)) {
+        window.writeCommand(getNextCommand);
+
+        localStorage.clear();
+      }
+    }, 500);
+
     return () => {
       window.removeEventListener('resize', fitAddon.fit);
       window.writeCommand = null;

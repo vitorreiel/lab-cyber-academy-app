@@ -2,39 +2,49 @@ import React from "react";
 import TerminalButton from "../TerminalButton";
 import "./styles.css";
 
-const TerminalSidebar = ({ containers }) => {
+const TerminalSidebar = ({ containers, forceTerminalRerender }) => {
   const [selectedContainer, setSelectedContainer] = React.useState(null);
 
-  const executeCommand = (command) => {
-    if (!selectedContainer) {
+  const executeCommand = ({ command, reopenTerminal }) => {
+    if (!selectedContainer?.id) {
       window.writeCommand(command);
 
       return;
     }
 
-    window.writeCommand('exit');
+    if (!reopenTerminal && !selectedContainer?.reopenTerminal) {
+      window.writeCommand('exit');
+
+      setTimeout(() => {
+        window.writeCommand(command);
+      }, 500);
+
+      return;
+    }
+
+    localStorage.setItem('nextCommand', command);
 
     setTimeout(() => {
-      window.writeCommand(command);
+      forceTerminalRerender();
     }, 500);
   };
 
-  const handleContainerClick = (id, command) => {
-    if (selectedContainer !== id) {
-      setSelectedContainer(id);
+  const handleContainerClick = (container) => {
+    if (selectedContainer?.id !== container.id) {
+      setSelectedContainer(container);
 
-      executeCommand(command);
+      executeCommand(container);
     }
   };
 
   return (
     <div class="listing-containers" id="listing-containers">
       {
-        containers.map(({ id, name, command }) => (
+        containers.map((container) => (
           <TerminalButton
-            key={id}
-            text={name}
-            onClick={() => handleContainerClick(id, command)}
+            key={container.id}
+            text={container.name}
+            onClick={() => handleContainerClick(container)}
           />
         ))
       }
