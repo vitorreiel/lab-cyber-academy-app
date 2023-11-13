@@ -26,8 +26,7 @@
 }
 
 .container-button:hover,
-.container-button.active,
-.container-button:focus {
+.container-button__active {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
   color: var(--white-900);
@@ -36,14 +35,12 @@
 }
 
 .container-button:hover .code-outlined,
-.container-button.active .code-outlined,
-.container-button:focus .code-outlined {
+.container-button__active .code-outlined {
   border-color: var(--white-900);
 }
 
 .container-button:hover .code-outlined svg path,
-.container-button.active .code-outlined svg path,
-.container-button:focus .code-outlined svg path {
+.container-button__active .code-outlined svg path {
   fill: var(--white-900);
   transition: all 200ms ease-in-out;
 }

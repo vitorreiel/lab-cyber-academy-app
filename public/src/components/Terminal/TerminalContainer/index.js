@@ -4,7 +4,7 @@ import TerminalInstance from "../TerminalInstance";
 import "./styles.css";
 
 const TerminalContainer = ({ containers = [] }) => {
-  const [forceState, setForceUpdate] = useState();
+  const [forceState, setForceUpdate] = useState(false);
 
   const forceTerminalRerender = () => {
     setForceUpdate(prevForceUpdate => !prevForceUpdate);
@@ -13,7 +13,10 @@ const TerminalContainer = ({ containers = [] }) => {
   return (
     <div className="terminal-page-container">
       <div className="terminal-page-content">
-        <TerminalSidebar containers={containers} forceTerminalRerender={forceTerminalRerender}  />
+        <TerminalSidebar
+          containers={containers}
+          forceTerminalRerender={forceTerminalRerender}
+        />
 
         <div id="terminal-container">
           <TerminalInstance key={forceState} />

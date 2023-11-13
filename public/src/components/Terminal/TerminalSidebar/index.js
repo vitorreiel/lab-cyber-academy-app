@@ -44,6 +44,7 @@ const TerminalSidebar = ({ containers, forceTerminalRerender }) => {
           <TerminalButton
             key={container.id}
             text={container.name}
+            isActive={container.id === selectedContainer?.id}
             onClick={() => handleContainerClick(container)}
           />
         ))
