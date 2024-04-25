@@ -5,6 +5,6 @@ services:
     image: 'lab-cyber-academy/web-terminal:latest'
     container_name: lab-cyber-academy
     volumes:
-      - ./config.toml:/root/config.toml
+      - ./connection.toml:/root/connection.toml
     ports:
       - '9000:9000'
