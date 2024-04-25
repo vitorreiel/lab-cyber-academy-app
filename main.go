@@ -12,27 +12,27 @@ import (
 )
 
 type config struct {
-	Host         string `toml:"host"`
-	Port         uint   `toml:"port"`
-	User         string `toml:"user"`
-	Password     string `toml:"password"`
+	Host     string `toml:"host"`
+	Port     uint   `toml:"port"`
+	User     string `toml:"user"`
+	Password string `toml:"password"`
 }
 
 func main() {
 	var (
-		host         string
-		port         uint
-		user         string
-		password     string
-		configPath   string
+		host       string
+		port       uint
+		user       string
+		password   string
+		configPath string
 	)
-	hostUsage := "the target host (required if no config file)"
-	portUsage := "the port to connect"
+	hostUsage := "the destination address (required if no config file)"
+	portUsage := "the connection port"
 	portDefualt := uint(22)
-	userUsage := "the login user (required if no config file)"
-	passwordUsage := "the login password"
+	userUsage := "the username (required if no config file)"
+	passwordUsage := "the user's password"
 	configPathUsage := "the path of config file (ignore other args if a config file exists)"
-	configPathDefualt := "./config.toml"
+	configPathDefualt := "./connection.toml"
 
 	flag.StringVar(&host, "t", "", hostUsage)
 	flag.UintVar(&port, "p", portDefualt, portUsage)
@@ -46,13 +46,13 @@ func main() {
 	var handler *sshHandler
 	if _, err := toml.DecodeFile(configPath, &cfg); errors.Is(err, os.ErrNotExist) {
 		if host == "" {
-			log.Fatal("host can not be empty")
+			log.Fatal("target host cannot be empty")
 		}
 		if user == "" {
-			log.Fatal("user can not be empty")
+			log.Fatal("login user cannot be empty")
 		}
 		if password == "" {
-			log.Fatal("password can not be empty")
+			log.Fatal("login password cannot be empty")
 		}
 		addr := fmt.Sprintf("%s:%d", host, port)
 		handler = &sshHandler{addr: addr, user: user, secret: password}
@@ -67,4 +67,3 @@ func main() {
 	http.HandleFunc("/web-socket/ssh", handler.webSocket)
 	log.Fatal(http.ListenAndServe(":9000", nil))
 }
-

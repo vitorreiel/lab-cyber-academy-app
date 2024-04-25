@@ -9,7 +9,9 @@ const TerminalInstance = () => {
   const webSocketRef = useRef(null);
 
   useEffect(() => {
-    const terminal = new Terminal();
+    const terminal = new Terminal({
+      fontSize: 17
+    });
     const fitAddon = new FitAddon();
 
     terminal.loadAddon(fitAddon);
@@ -18,6 +20,14 @@ const TerminalInstance = () => {
 
     const initTerminal = () => {
       terminal.open(document.getElementById('terminal'));
+
+      const xtermViewport = document.querySelector('.xterm-viewport');
+      xtermViewport.style.borderRadius = '3px';
+      const xtermScreen = document.querySelector('.xterm-screen');
+      xtermScreen.style.height = '750px';
+      const xtermTextLayer = document.querySelector('.xterm-text-layer');
+      xtermTextLayer.style.paddingLeft = '6px';
+      xtermTextLayer.style.borderRadius = '3px';
 
       fitAddon.fit();
 
