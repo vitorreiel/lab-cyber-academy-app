@@ -28,6 +28,8 @@ const TerminalInstance = () => {
       const xtermTextLayer = document.querySelector('.xterm-text-layer');
       xtermTextLayer.style.paddingLeft = '6px';
       xtermTextLayer.style.borderRadius = '3px';
+      const xtermCursorLayer = document.querySelector('.xterm-cursor-layer');
+      xtermCursorLayer.style.paddingLeft = '10px';
 
       fitAddon.fit();
 
