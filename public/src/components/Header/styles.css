@@ -1,13 +1,15 @@
 header {
   width: 100%;
   background-color: var(--primary-color);
+  height: 80px;
 }
 header .header-container {
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
   gap: 10px;
-  padding: var(--padding);
+  padding: 0 24px;
+  height: 100%;
 }
 header .header-container .title,
 header .header-container .button-text {
@@ -22,10 +24,6 @@ header .header-container .button-text:hover {
   transform: scale(1.05);
 }
 @media (max-width: 767px) {
-  .header-container {
-    padding: var(--padding-m);
-  }
-
   .header-container .title {
     font-size: 14px;
   }

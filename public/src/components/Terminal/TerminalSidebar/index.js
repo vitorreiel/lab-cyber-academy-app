@@ -1,8 +1,13 @@
 import React from "react";
+import { useLab } from "../../../hooks/useLab";
+import { useRouter } from "../../../hooks/useRouter";
 import TerminalButton from "../TerminalButton";
 import "./styles.css";
 
 const TerminalSidebar = ({ containers, forceTerminalRerender }) => {
+  const { setLab } = useLab();
+  const { setPage } = useRouter();
+
   const [selectedContainer, setSelectedContainer] = React.useState(null);
 
   const executeCommand = ({ command, reopenTerminal }) => {
@@ -37,8 +42,16 @@ const TerminalSidebar = ({ containers, forceTerminalRerender }) => {
     }
   };
 
+  const handleExitClick = () => {
+    window.writeCommand('exit');
+
+    setSelectedContainer(null);
+    setLab({});
+    setPage('home');
+  };
+
   return (
-    <div class="listing-containers" id="listing-containers">
+    <div className="listing-containers" id="listing-containers">
       {
         containers.map((container) => (
           <TerminalButton
@@ -49,6 +62,13 @@ const TerminalSidebar = ({ containers, forceTerminalRerender }) => {
           />
         ))
       }
+
+      <TerminalButton
+        key="exit"
+        text="Sair"
+        isActive={false}
+        onClick={handleExitClick}
+      />
     </div>
   );
 };

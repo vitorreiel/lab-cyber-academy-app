@@ -9,6 +9,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   font: inherit;
   vertical-align: baseline;
   font-family: 'Roboto';
+  box-sizing: border-box;
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -59,6 +60,5 @@ button, i {
   --padding-horizontal-m: 0 24px;
   --padding-vertical: 24px 0;
   --padding-vertical-m: 16px 0;
-  --padding: 24px 70px;
   --padding-m: 16px 24px;
 }
