@@ -128,12 +128,6 @@ func (c *sshClient) wsRead() error {
 func (c *sshClient) bridgeWSAndSSH() {
 	defer c.conn.Close()
 
-	wdSize, err := c.getWindowSize()
-	if err != nil {
-		log.Println("bridgeWSAndSSH: getWindowSize:", err)
-		return
-	}
-
 	config := &ssh.ClientConfig{
 		User: c.user,
 		Auth: []ssh.AuthMethod{
@@ -141,6 +135,7 @@ func (c *sshClient) bridgeWSAndSSH() {
 		},
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
+	var err error
 	c.client, err = ssh.Dial("tcp", c.addr, config)
 	if err != nil {
 		log.Println("bridgeWSAndSSH: ssh.Dial:", err)
@@ -169,7 +164,7 @@ func (c *sshClient) bridgeWSAndSSH() {
 	}
 	defer c.sessionIn.Close()
 
-	if err := c.session.RequestPty("xterm", wdSize.High*2, wdSize.Width, terminalModes); err != nil {
+	if err := c.session.RequestPty("xterm", 0, 0, terminalModes); err != nil {
 		log.Println("bridgeWSAndSSH: session.RequestPty:", err)
 		return
 	}
@@ -216,5 +211,83 @@ func (h *sshHandler) webSocket(w http.ResponseWriter, req *http.Request) {
 		secret:   h.secret,
 		closeSig: make(chan struct{}, 1),
 	}
+
 	go sshClient.bridgeWSAndSSH()
+
+	// Lendo o JSON recebido do frontend
+	var requestData struct {
+		Laboratory string `json:"laboratory"`
+	}
+	err = conn.ReadJSON(&requestData)
+	if err != nil {
+		log.Println("Error reading JSON:", err)
+		return
+	}
+
+	// Verificando o laboratório e executando o script correspondente
+	var scriptPath string
+	switch requestData.Laboratory {
+	case "01":
+		scriptPath = "/opt/labs/laboratory-01/start-lab.sh"
+	case "02":
+		scriptPath = "/opt/labs/laboratory-02/start-lab.sh"
+	default:
+		log.Println("Invalid laboratory:", requestData.Laboratory)
+		return
+	}
+
+	// Executando o script no servidor remoto via SSH
+	err = sshClient.executeScript(scriptPath)
+	if err != nil {
+		log.Println("Error executing script:", err)
+		return
+	}
+
+	// Enviar o resultado para o frontend
+	result := struct {
+		Laboratory string `json:"laboratory"`
+	}{Laboratory: requestData.Laboratory}
+
+	err = conn.WriteJSON(result)
+	if err != nil {
+		log.Println("Error writing JSON response:", err)
+	}
 }
+
+func (c *sshClient) executeScript(scriptPath string) error {
+	config := &ssh.ClientConfig{
+		User: c.user,
+		Auth: []ssh.AuthMethod{
+			ssh.Password(c.secret),
+		},
+		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+	}
+
+	client, err := ssh.Dial("tcp", c.addr, config)
+	if err != nil {
+		return fmt.Errorf("ssh.Dial: %w", err)
+	}
+	defer client.Close()
+
+	session, err := client.NewSession()
+	if err != nil {
+		return fmt.Errorf("client.NewSession: %w", err)
+	}
+	defer session.Close()
+
+	session.Stdout = os.Stdout
+	session.Stderr = os.Stderr
+
+	err = session.Start(scriptPath)
+	if err != nil {
+		return fmt.Errorf("session.Start: %w", err)
+	}
+
+	err = session.Wait()
+	if err != nil {
+		return fmt.Errorf("session.Wait: %w", err)
+	}
+
+	return nil // Indicar que a execução foi concluída sem erros
+}
+
