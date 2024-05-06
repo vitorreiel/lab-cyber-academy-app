@@ -1,21 +1,15 @@
 import Button from "../../Button";
 import Card from "../../Card";
-import { useLab } from '../../../hooks/useLab';
 import './styles.css';
 
-const LabCard = ({ labData = {} }) => {
-  const { setLab } = useLab();
+const LabCard = ({ showDetails = () => {}, showStartLab = () => {}, labData = {} }) => {
 
-  const showDetails = () => {
-    alert(labData.details);
+  const _showDetails = () => {
+    showDetails(labData);
   };
 
-  const startLab = () => {
-    const confirmation = window.confirm(`Você realmente deseja iniciar o cenário ${labData.name}?`);
-
-    if (confirmation) {
-      setLab(labData);
-    }
+  const _showStartLab = () => {
+    showStartLab(labData);
   };
 
   return (
@@ -27,20 +21,20 @@ const LabCard = ({ labData = {} }) => {
           <button
             type="button"
             className="lab-content-description__details"
-            onClick={showDetails}
+            onClick={_showDetails}
           >?</button>
         </div>
 
         <Button
           type="primary"
           className="lab-content-start-button"
-          onClick={startLab}
+          onClick={_showStartLab}
         >
           Iniciar
         </Button>
       </div>
     </Card>
-  )
+  );
 };
 
 export default LabCard;

@@ -26,3 +26,18 @@
   flex-wrap: wrap;
   width: 100%;
 }
+
+.modal-footer-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  gap: 10px;
+  width: 50%;
+}
+
+.modal-footer-description {
+  text-align: center;
+  font-weight: bold;
+  margin: 20px 0;
+}
