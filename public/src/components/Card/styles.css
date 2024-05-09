@@ -1,0 +1,31 @@
+.card {
+  background-color: #fff;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 400px;
+  width: 100%;
+  gap: 10px;
+}
+
+@media screen and (max-width: 400px) {
+  .card {
+    max-width: 100%;
+  }
+}
+
+.card .card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.card .card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
