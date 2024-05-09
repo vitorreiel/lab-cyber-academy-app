@@ -85,23 +85,28 @@ const CONTAINERS_LIST_2 = [
   },
   {
     id: 6,
-    name: "User Gustavo",
-    command: "clear && docker exec -it mn.gustavo bash"
+    name: "User Andreia",
+    command: "clear && docker exec -it mn.andreia bash"
   },
   {
     id: 7,
-    name: "User Joyce",
-    command: "clear && docker exec -it mn.joyce bash"
+    name: "User Lohan",
+    command: "clear && docker exec -it mn.lohan bash"
   },
   {
     id: 8,
-    name: "User Henrique",
-    command: "clear && docker exec -it mn.henrique bash"
+    name: "User Sophia",
+    command: "clear && docker exec -it mn.sophia bash"
   },
   {
     id: 9,
-    name: "User Gabriele",
-    command: "clear && docker exec -it mn.gabriele bash"
+    name: "User Saulo",
+    command: "clear && docker exec -it mn.saulo bash"
+  },
+  {
+    id: 10,
+    name: "User João",
+    command: "clear && docker exec -it mn.joao bash"
   }
 ];
 

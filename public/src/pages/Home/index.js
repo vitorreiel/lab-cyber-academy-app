@@ -19,7 +19,7 @@ const LABS_LIST = [
   {
     name: 'Laboratório 02',
     description: 'Ênfase em ataque',
-    details: 'Lorem ipsum',
+    details: 'Esse laboratório utiliza o cenário de Cibersegurança com o uso da ferramenta CyRM-Attack, um tipo de Cyber Range desenvolvido para simular um cenário realista, com o intuito de para preparar o usuário e fazê-lo compreender como funciona um breve cenário de ataque cibérnetico, através de práticas guiadas por um roteiro de estudo.',
     id: '02'
   }
 ]

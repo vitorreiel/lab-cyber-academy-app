@@ -44,13 +44,16 @@ const TerminalSidebar = ({ containers, forceTerminalRerender }) => {
 
   const handleExitClick = () => {
     window.writeCommand('docker attach containernet');
-    window.writeCommand('exit');
-
+  
     setTimeout(() => {
-      setSelectedContainer(null);
-      setLab({});
-      setPage('home');
-    }, 1000);
+      window.writeCommand('exit');
+  
+      setTimeout(() => {
+        setSelectedContainer(null);
+        setLab({});
+        setPage('home');
+      }, 1000);
+    }, 500);
   };
 
   return (
