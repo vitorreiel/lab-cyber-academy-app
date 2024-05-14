@@ -243,6 +243,9 @@ func (h *sshHandler) webSocket(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	// Definir tempo limite de escrita do JSON
+	conn.SetWriteDeadline(time.Now().Add(time.Duration(200) * time.Second))
+
 	// Enviar o resultado para o frontend
 	result := struct {
 		Laboratory string `json:"laboratory"`
@@ -290,4 +293,3 @@ func (c *sshClient) executeScript(scriptPath string) error {
 
 	return nil // Indicar que a execução foi concluída sem erros
 }
-
