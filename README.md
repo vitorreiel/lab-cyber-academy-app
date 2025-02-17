@@ -3,6 +3,8 @@
 
 O objetivo deste projeto é propor, de forma automatizada, a criação de laboratórios de pesquisa e estudo na área de Cibersegurança, utilizando Cyber Range em containers Docker em plataformas na nuvem. Com isso, através de uma aplicação combinada com métodos de Infraestrutura como Código, proponho automatizar e facilitar a criação da infraestrutura necessária para a criação dos laboratórios em instâncias EC2.
 
+> #### 🎯 Nota: Este repositório armazena o código front-end e back-end da aplicação. O repositório raiz do projeto irá clonar este repositório na instância provisionada e fará a instalação e execução das ferramentas necessárias de maneira automatizada.
+
 <br>
 
 ---
