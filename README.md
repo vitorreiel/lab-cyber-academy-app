@@ -1,16 +1,27 @@
 # ⚗️ Lab Cyber Academy Aplicação 🧪
 <br>
 
-O objetivo deste projeto é propor, de forma automatizada, a criação de laboratórios de pesquisa e estudo na área de Cibersegurança, utilizando Cyber Range em containers Docker em plataformas na nuvem. Com isso, através de uma aplicação combinada com métodos de Infraestrutura como Código, proponho automatizar e facilitar a criação da infraestrutura necessária para a criação dos laboratórios em instâncias EC2.
-
-> #### 🎯 Nota: Este repositório armazena o código front-end e back-end da aplicação. O repositório raiz do projeto irá clonar este repositório na instância provisionada e fará a instalação e execução das ferramentas necessárias de maneira automatizada.
-
-<br>
+Este repositório contém o código-fonte do front-end e back-end da aplicação do Lab Cyber Academy (LCA). Durante o processo de provisionamento, o repositório principal do projeto irá clonar este repositório, realizar a instalação das dependências, iniciar os serviços necessários e disponibilizá-los ao usuário final de forma automatizada.
 
 ---
-<br>
 
-#### 🎯 Nota: Este repositório é uma extensão utilizada em conjunto ao [⚗️ Lab Cyber Academy 🧪](https://github.com/vitorreiel/lab-cyber-academy).
+
+## Frontend da Aplicação
+
+O frontend da aplicação é desenvolvido em **React** e sua estrutura é simples e de fácil entendimento. É possível conferir o código acessando a pasta `frontend`.
+
+Caso seja de interesse adicionar novos cenários de **cyber range**, é necessário realizar algumas adições no código-fonte. Alguns modelos de código foram deixados comentados para facilitar a implementação desses novos laboratórios.
+
+As modificações devem ser feitas, nos arquivos:
+
+- `Home/index.js`
+- `Terminal/index.js`
+
+Neles, é possível identificar os trechos onde deve ser implementada a descrição do novo laboratório.
+
+
+
+#### Este repositório é uma extensão utilizada em conjunto ao repositório oficial: [⚗️ Lab Cyber Academy 🧪](https://github.com/vitorreiel/lab-cyber-academy).
 
 <br>
 

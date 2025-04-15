@@ -1,10 +1,9 @@
-version: '3'
 services:
   lab-cyber-academy:
     build: ./
-    image: 'lab-cyber-academy/web-terminal:latest'
+    image: lab-cyber-academy/web-terminal:latest
     container_name: lab-cyber-academy
     volumes:
       - ./connection.toml:/root/connection.toml
     ports:
-      - '9000:9000'
+      - 9000:9000

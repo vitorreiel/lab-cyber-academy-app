@@ -110,6 +110,26 @@ const CONTAINERS_LIST_2 = [
   }
 ];
 
+// Utilize o padrão de código abaixo para adicionar novos cenários:
+// const CONTAINERS_LIST_3 = [
+//   {
+//     id: 1,
+//     name: "Containernet",
+//     reopenTerminal: true,
+//     command: "clear && docker attach containernet\r"
+//   },
+//   {
+//     id: 2,
+//     name: "Suporte",
+//     command: "clear && docker exec -it mn.suporte bash"
+//   },
+//   {
+//     id: 3,
+//     name: "Internet",
+//     command: "clear && docker exec -it mn.internet bash"
+//   }
+// ];
+
 function Terminal() {
   const {lab} = useLab()
   const getContainers = () => {
@@ -119,6 +139,10 @@ function Terminal() {
     if (lab.id === "02"){
       return CONTAINERS_LIST_2
     }
+    // Utilize o padrão de código abaixo para adicionar novos cenários:
+    // if (lab.id === "03"){
+    //   return CONTAINERS_LIST_3
+    // }
     return []
   }
 

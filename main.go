@@ -63,7 +63,7 @@ func main() {
 		handler = &sshHandler{addr: addr, user: cfg.User, secret: cfg.Password}
 	}
 
-	http.Handle("/", http.FileServer(http.Dir("./public/")))
+	http.Handle("/", http.FileServer(http.Dir("./frontend/")))
 	http.HandleFunc("/web-socket/ssh", handler.webSocket)
 	log.Fatal(http.ListenAndServe(":9000", nil))
 }
