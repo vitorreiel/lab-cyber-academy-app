@@ -226,12 +226,9 @@ func (h *sshHandler) webSocket(w http.ResponseWriter, req *http.Request) {
 
 	// Verificando o laboratório e executando o script correspondente
 	labNumber := requestData.Laboratory
-	scriptPath := fmt.Sprintf("/opt/labs/laboratory-%s/start-lab.sh", labNumber)	
-	if _, err := os.Stat(scriptPath); os.IsNotExist(err) {
-		log.Println("Laboratório não encontrado:", scriptPath)
-		return
-	}	
-
+	scriptPath := fmt.Sprintf("/opt/labs/laboratory-%s/start-lab.sh", labNumber)
+	log.Println("Repositório executado:", scriptPath)
+	
 	// Executando o script no servidor remoto via SSH
 	err = sshClient.executeScript(scriptPath)
 	if err != nil {
