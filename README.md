@@ -46,8 +46,10 @@ Abaixo, um exemplo de inclusão do "Laboratório 03" no arquivo `frontend/src/pa
 Primeira adição de código:
 ![Img 1](images/pag-1.jpg)
 
+<br>
 
-Em seguida, um exemplo da continuação da inclusão do "Laboratório 03" no arquivo `frontend/src/pages/Terminal/index.js`, também com base no código comentado. Observe que, nesse segundo arquivo, será necessário realizar duas inclusões de código.
+Em seguida, um exemplo da continuação da inclusão do "Laboratório 03" no arquivo `frontend/src/pages/Terminal/index.js`, também com base no código comentado.
+Observe que, nesse segundo arquivo, será necessário realizar duas inclusões de código.
 
 
 Primeira adição de código:
