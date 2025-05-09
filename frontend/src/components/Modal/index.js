@@ -11,6 +11,7 @@ const modalContainer = {
     maxWidth: '800px',
     padding: '20px',
     width: '100%',
+    zIndex: 999999,
   },
   title: {
     textAlign: 'center',

@@ -6,7 +6,6 @@ const CONTAINERS_LIST_1 = [
   {
     id: 1,
     name: "Containernet",
-    reopenTerminal: true,
     command: "clear && docker attach containernet\r"
   },
   {
@@ -60,7 +59,6 @@ const CONTAINERS_LIST_2 = [
   {
     id: 1,
     name: "Containernet",
-    reopenTerminal: true,
     command: "clear && docker attach containernet\r"
   },
   {
@@ -115,7 +113,6 @@ const CONTAINERS_LIST_2 = [
 //   {
 //     id: 1,
 //     name: "Containernet",
-//     reopenTerminal: true,
 //     command: "clear && docker attach containernet\r"
 //   },
 //   {

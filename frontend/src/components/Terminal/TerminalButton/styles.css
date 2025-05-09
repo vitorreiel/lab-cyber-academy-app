@@ -34,6 +34,12 @@
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
+.container-button__exit:hover {
+  background-color: var(--status-invalid) !important;
+  border-color: var(--status-invalid) !important;
+  color: var(--white-900) !important;
+}
+
 .container-button:hover .code-outlined,
 .container-button__active .code-outlined {
   border-color: var(--white-900);

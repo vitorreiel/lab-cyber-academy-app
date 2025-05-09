@@ -2,36 +2,34 @@ import React from "react";
 import { useLab } from "../../../hooks/useLab";
 import { useRouter } from "../../../hooks/useRouter";
 import TerminalButton from "../TerminalButton";
+import { sleep } from "../../../utils/sleep"
 import "./styles.css";
+import BaseModal from "../../Modal";
+import Button from "../../Button";
 
 const TerminalSidebar = ({ containers, forceTerminalRerender }) => {
   const { setLab } = useLab();
   const { setPage } = useRouter();
 
+  const [exitModalOpen, setExitModalOpen] = React.useState(false);
   const [selectedContainer, setSelectedContainer] = React.useState(null);
 
-  const executeCommand = ({ command, reopenTerminal }) => {
+  const reloadTerminal = () => {
+    setTimeout(() => {
+      forceTerminalRerender();
+    }, 300);
+  };
+
+  const executeCommand = ({ command }) => {
     if (!selectedContainer?.id) {
       window.writeCommand(command);
 
       return;
     }
 
-    if (!reopenTerminal && !selectedContainer?.reopenTerminal) {
-      window.writeCommand('exit');
-
-      setTimeout(() => {
-        window.writeCommand(command);
-      }, 500);
-
-      return;
-    }
-
     localStorage.setItem('nextCommand', command);
 
-    setTimeout(() => {
-      forceTerminalRerender();
-    }, 500);
+    reloadTerminal();
   };
 
   const handleContainerClick = (container) => {
@@ -43,17 +41,26 @@ const TerminalSidebar = ({ containers, forceTerminalRerender }) => {
   };
 
   const handleExitClick = () => {
-    window.writeCommand('docker attach containernet');
-  
-    setTimeout(() => {
-      window.writeCommand('exit');
-  
+    setExitModalOpen(true);
+  };
+
+  const onExit = () => {
+    setExitModalOpen(false);
+    reloadTerminal();
+
+    sleep(500).then(() => {
+      window.writeCommand('docker attach containernet');
+    
       setTimeout(() => {
-        setSelectedContainer(null);
-        setLab({});
-        setPage('home');
-      }, 1000);
-    }, 500);
+        window.writeCommand('exit');
+    
+        setTimeout(() => {
+          setSelectedContainer(null);
+          setLab({});
+          setPage('home');
+        }, 1000);
+      }, 500);
+    });
   };
 
   return (
@@ -63,7 +70,7 @@ const TerminalSidebar = ({ containers, forceTerminalRerender }) => {
           <TerminalButton
             key={container.id}
             text={container.name}
-            isActive={container.id === selectedContainer?.id}
+            variant={container.id === selectedContainer?.id ? "active" : "default"}
             onClick={() => handleContainerClick(container)}
           />
         ))
@@ -72,9 +79,27 @@ const TerminalSidebar = ({ containers, forceTerminalRerender }) => {
       <TerminalButton
         key="exit"
         text="Sair"
-        isActive={false}
+        variant="exit"
         onClick={handleExitClick}
       />
+
+      {exitModalOpen && (
+        <BaseModal
+          title="Tem certeza?"
+          isOpen={exitModalOpen}
+          closeModal={() => setExitModalOpen(false)}
+          FooterComponent={() => (
+            <>
+              <p className="modal-footer-description">Você realmente deseja iniciar esse cenário?</p>
+
+              <div className="modal-footer-button">
+                <Button type="destructive" onClick={onExit}>Sim</Button>
+                <Button onClick={() => setExitModalOpen(false)}>Não</Button>
+              </div>
+            </>
+          )}
+        />
+      )}
     </div>
   );
 };
