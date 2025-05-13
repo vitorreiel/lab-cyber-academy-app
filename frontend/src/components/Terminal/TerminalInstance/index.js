@@ -70,7 +70,7 @@ const TerminalInstance = () => {
       if (Boolean(getNextCommand)) {
         window.writeCommand(getNextCommand);
 
-        localStorage.clear();
+        localStorage.removeItem('nextCommand');
       }
     }, 500);
 
