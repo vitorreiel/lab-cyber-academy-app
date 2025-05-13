@@ -21,6 +21,9 @@ const TerminalInstance = () => {
     const initTerminal = () => {
       terminal.open(document.getElementById('terminal'));
 
+      const xtermParent = document.querySelector('.terminal.xterm');
+      if (xtermParent) xtermParent.style.zIndex = 0;
+
       const xtermViewport = document.querySelector('.xterm-viewport');
       xtermViewport.style.borderRadius = '3px';
       const xtermScreen = document.querySelector('.xterm-screen');
@@ -67,7 +70,7 @@ const TerminalInstance = () => {
       if (Boolean(getNextCommand)) {
         window.writeCommand(getNextCommand);
 
-        localStorage.clear();
+        localStorage.removeItem('nextCommand');
       }
     }, 500);
 

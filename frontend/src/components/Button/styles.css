@@ -43,3 +43,26 @@
 .secondary-button:focus {
   outline: none;
 }
+
+.destructive-button {
+  background-color: var(--status-invalid);
+  border: 1px solid var(--status-invalid);
+  color: var(--white-900);
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 2px;
+  margin-top: 1rem;
+  padding: 8px;
+  transition: all 200ms ease-in-out;
+}
+
+.destructive-button:hover {
+  transform: scale(1.05);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.destructive-button:focus {
+  outline: none;
+}
