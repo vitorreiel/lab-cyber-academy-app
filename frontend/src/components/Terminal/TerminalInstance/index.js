@@ -27,7 +27,7 @@ const TerminalInstance = () => {
       const xtermViewport = document.querySelector('.xterm-viewport');
       xtermViewport.style.borderRadius = '3px';
       const xtermScreen = document.querySelector('.xterm-screen');
-      xtermScreen.style.height = '750px';
+      xtermScreen.style.height = '80vh';
       const xtermTextLayer = document.querySelector('.xterm-text-layer');
       xtermTextLayer.style.paddingLeft = '6px';
       xtermTextLayer.style.borderRadius = '3px';
