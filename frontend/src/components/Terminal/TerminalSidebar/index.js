@@ -2,7 +2,7 @@ import React from "react";
 import { useLab } from "../../../hooks/useLab";
 import { useRouter } from "../../../hooks/useRouter";
 import TerminalButton from "../TerminalButton";
-import { sleep } from "../../../utils/sleep"
+import { sleep } from "../../../utils/sleep";
 import BaseModal from "../../Modal";
 import Button from "../../Button";
 import "./styles.css";
@@ -28,7 +28,7 @@ const TerminalSidebar = ({ containers, forceTerminalRerender }) => {
       return;
     }
 
-    localStorage.setItem('nextCommand', command);
+    localStorage.setItem("nextCommand", command);
 
     reloadTerminal();
   };
@@ -49,49 +49,69 @@ const TerminalSidebar = ({ containers, forceTerminalRerender }) => {
   const onExit = () => {
     const MAX_RETRIES = 5;
     const BASE_DELAY = 500;
-    let retryCount = 1;
+    let retryCount = 0;
 
-    do {
-      console.log(\n[EXIT] - Attempting ${retryCount} to exit container...);
+    const attemptExit = () => {
+      console.log(`\n[EXIT] - Attempting ${retryCount + 1} to exit container...`);
       console.log("[EXIT] - Exiting exec...");
       console.log("[EXIT] - Reload terminal...");
       setClosingLoading(true);
-  
+
       reloadTerminal();
 
-      const delayTime = BASE_DELAY * (retryCount);
-  
-      sleep(delayTime).then(() => {
-        console.log("[EXIT] - Attaching container...");
-        window.writeCommand('docker attach containernet');
-  
-        sleep(delayTime).then(() => {
+      const delayTime = BASE_DELAY * (retryCount + 1);
+
+      return sleep(delayTime)
+        .then(() => {
+          console.log("[EXIT] - Attaching container...");
+          window.writeCommand("docker attach containernet");
+          return sleep(delayTime);
+        })
+        .then(() => {
           console.log("[EXIT] - Exiting container...");
-          window.writeCommand('exit');
-  
-          setTimeout(() => {
-            console.log("[EXIT] - Resetting state...");
-            setSelectedContainer(null);
-            setLab({});
-            setPage('home');
-          }, delayTime + BASE_DELAY);
+          window.writeCommand("exit");
+          return sleep(delayTime + BASE_DELAY);
+        })
+        .then(() => {
+          console.log("[EXIT] - Resetting state...");
+          setSelectedContainer(null);
+          setLab({});
+          setPage("home");
+          return true;
+        })
+        .catch(error => {
+          console.error(`[EXIT] - Attempt ${retryCount + 1} failed:`, error);
+          return false;
         });
-      });
-    } while (retryCount <= MAX_RETRIES);
+    };
+
+    const tryNextAttempt = () => {
+      if (retryCount >= MAX_RETRIES) return;
+
+      attemptExit()
+        .then(success => {
+          if (!success) {
+            retryCount++;
+            tryNextAttempt();
+          }
+        });
+    };
+
+    tryNextAttempt();
   };
 
   return (
     <div className="listing-containers" id="listing-containers">
-      {
-        containers.map((container) => (
-          <TerminalButton
-            key={container.id}
-            text={container.name}
-            variant={container.id === selectedContainer?.id ? "active" : "default"}
-            onClick={() => handleContainerClick(container)}
-          />
-        ))
-      }
+      {containers.map((container) => (
+        <TerminalButton
+          key={container.id}
+          text={container.name}
+          variant={
+            container.id === selectedContainer?.id ? "active" : "default"
+          }
+          onClick={() => handleContainerClick(container)}
+        />
+      ))}
 
       <TerminalButton
         key="exit"
@@ -107,13 +127,24 @@ const TerminalSidebar = ({ containers, forceTerminalRerender }) => {
           closeModal={() => setExitModalOpen(false)}
           FooterComponent={() => (
             <>
-              <p className="modal-footer-description">Você realmente deseja iniciar esse cenário?</p>
+              <p className="modal-footer-description">
+                Você realmente deseja iniciar esse cenário?
+              </p>
 
               <div className="modal-footer-button">
-                <Button type="destructive" onClick={onExit} disabled={closingLoading}>
+                <Button
+                  type="destructive"
+                  onClick={onExit}
+                  disabled={closingLoading}
+                >
                   {closingLoading ? "Saindo..." : "Sim"}
                 </Button>
-                <Button onClick={() => setExitModalOpen(false)} disabled={closingLoading}>Não</Button>
+                <Button
+                  onClick={() => setExitModalOpen(false)}
+                  disabled={closingLoading}
+                >
+                  Não
+                </Button>
               </div>
             </>
           )}
