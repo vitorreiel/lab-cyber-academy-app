@@ -47,28 +47,37 @@ const TerminalSidebar = ({ containers, forceTerminalRerender }) => {
   };
 
   const onExit = () => {
-    console.log("[EXIT] - Exiting exec...");
-    console.log("[EXIT] - Reload terminal...");
-    setClosingLoading(true);
+    const MAX_RETRIES = 5;
+    const BASE_DELAY = 500;
+    let retryCount = 1;
 
-    reloadTerminal();
+    do {
+      console.log(\n[EXIT] - Attempting ${retryCount} to exit container...);
+      console.log("[EXIT] - Exiting exec...");
+      console.log("[EXIT] - Reload terminal...");
+      setClosingLoading(true);
+  
+      reloadTerminal();
 
-    sleep(1000).then(() => {
-      console.log("[EXIT] - Attaching container...");
-      window.writeCommand('docker attach containernet');
-
-      sleep(1000).then(() => {
-        console.log("[EXIT] - Exiting container...");
-        window.writeCommand('exit');
-
-        setTimeout(() => {
-          console.log("[EXIT] - Resetting state...");
-          setSelectedContainer(null);
-          setLab({});
-          setPage('home');
-        }, 1500);
+      const delayTime = BASE_DELAY * (retryCount);
+  
+      sleep(delayTime).then(() => {
+        console.log("[EXIT] - Attaching container...");
+        window.writeCommand('docker attach containernet');
+  
+        sleep(delayTime).then(() => {
+          console.log("[EXIT] - Exiting container...");
+          window.writeCommand('exit');
+  
+          setTimeout(() => {
+            console.log("[EXIT] - Resetting state...");
+            setSelectedContainer(null);
+            setLab({});
+            setPage('home');
+          }, delayTime + BASE_DELAY);
+        });
       });
-    });
+    } while (retryCount <= MAX_RETRIES);
   };
 
   return (
