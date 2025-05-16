@@ -50,11 +50,11 @@ const TerminalSidebar = ({ containers, forceTerminalRerender }) => {
     console.log("[EXIT] - Reload terminal...");
     reloadTerminal();
 
-    sleep(500).then(() => {
+    sleep(1000).then(() => {
       console.log("[EXIT] - Attaching container...");
       window.writeCommand('docker attach containernet');
 
-      sleep(500).then(() => {
+      sleep(1000).then(() => {
         console.log("[EXIT] - Exiting container...");
         window.writeCommand('exit');
 
@@ -63,8 +63,8 @@ const TerminalSidebar = ({ containers, forceTerminalRerender }) => {
           setSelectedContainer(null);
           setLab({});
           setPage('home');
-        }, 1000);
-      })
+        }, 1500);
+      });
     });
   };
 
