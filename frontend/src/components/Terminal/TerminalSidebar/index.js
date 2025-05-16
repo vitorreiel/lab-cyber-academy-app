@@ -3,9 +3,9 @@ import { useLab } from "../../../hooks/useLab";
 import { useRouter } from "../../../hooks/useRouter";
 import TerminalButton from "../TerminalButton";
 import { sleep } from "../../../utils/sleep"
-import "./styles.css";
 import BaseModal from "../../Modal";
 import Button from "../../Button";
+import "./styles.css";
 
 const TerminalSidebar = ({ containers, forceTerminalRerender }) => {
   const { setLab } = useLab();
@@ -13,6 +13,7 @@ const TerminalSidebar = ({ containers, forceTerminalRerender }) => {
 
   const [exitModalOpen, setExitModalOpen] = React.useState(false);
   const [selectedContainer, setSelectedContainer] = React.useState(null);
+  const [closingLoading, setClosingLoading] = React.useState(false);
 
   const reloadTerminal = () => {
     setTimeout(() => {
@@ -42,12 +43,14 @@ const TerminalSidebar = ({ containers, forceTerminalRerender }) => {
 
   const handleExitClick = () => {
     setExitModalOpen(true);
+    setClosingLoading(false);
   };
 
   const onExit = () => {
     console.log("[EXIT] - Exiting exec...");
-    setExitModalOpen(false);
     console.log("[EXIT] - Reload terminal...");
+    setClosingLoading(true);
+
     reloadTerminal();
 
     sleep(1000).then(() => {
@@ -98,8 +101,10 @@ const TerminalSidebar = ({ containers, forceTerminalRerender }) => {
               <p className="modal-footer-description">Você realmente deseja iniciar esse cenário?</p>
 
               <div className="modal-footer-button">
-                <Button type="destructive" onClick={onExit}>Sim</Button>
-                <Button onClick={() => setExitModalOpen(false)}>Não</Button>
+                <Button type="destructive" onClick={onExit} disabled={closingLoading}>
+                  {closingLoading ? "Saindo..." : "Sim"}
+                </Button>
+                <Button onClick={() => setExitModalOpen(false)} disabled={closingLoading}>Não</Button>
               </div>
             </>
           )}
