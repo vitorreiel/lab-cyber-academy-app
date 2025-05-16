@@ -45,21 +45,26 @@ const TerminalSidebar = ({ containers, forceTerminalRerender }) => {
   };
 
   const onExit = () => {
+    console.log("[EXIT] - Exiting exec...");
     setExitModalOpen(false);
+    console.log("[EXIT] - Reload terminal...");
     reloadTerminal();
 
     sleep(500).then(() => {
+      console.log("[EXIT] - Attaching container...");
       window.writeCommand('docker attach containernet');
-    
-      setTimeout(() => {
+
+      sleep(500).then(() => {
+        console.log("[EXIT] - Exiting container...");
         window.writeCommand('exit');
-    
+
         setTimeout(() => {
+          console.log("[EXIT] - Resetting state...");
           setSelectedContainer(null);
           setLab({});
           setPage('home');
         }, 1000);
-      }, 500);
+      })
     });
   };
 
